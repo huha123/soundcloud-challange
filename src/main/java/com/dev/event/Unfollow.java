@@ -20,7 +20,7 @@ public class Unfollow extends Event {
 
 	@Override
 	public void sendMessageUser(Map<Integer, User> clients) {
-		System.out.println("sendMessageUser>>>>>>>>>>>>>>>>>>>>>>[" + seq + "][" + splitMessage[1] + "] :" + message);			
+		System.out.println("Unfollow [" + seq + "][" + splitMessage[1] + "] :" + message);			
 	}
 
 }

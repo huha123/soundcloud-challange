@@ -22,15 +22,14 @@ public class PrivateMessage extends Event {
 
 	@Override
 	public void sendMessageUser(Map<Integer, User> clients) {
-		System.out.println("sendMessageUser>>>>>>>>>>>>>>>>>>>>>>[" + seq + "][" + splitMessage[1] + "] :" + message);
+		System.out.println("PrivateMessage [" + seq + "][" + splitMessage[1] + "] :" + message);
 		String toUserId = splitMessage[3];
 		if (clients.containsKey(toUserId) == true) {
 			Socket socket = clients.get(toUserId).getSocket();
 			try {
 				writer = new PrintWriter(socket.getOutputStream());
 				writer.println(message);
-				writer.checkError();
-				System.out.println("sendMessageUser :" + message);
+				writer.flush();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

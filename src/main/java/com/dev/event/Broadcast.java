@@ -1,6 +1,8 @@
 package com.dev.event;
 
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.Map;
 
 import com.dev.user.User;
@@ -20,9 +22,17 @@ public class Broadcast extends Event {
 
 	@Override
 	public void sendMessageUser(Map<Integer, User> clients) {
-		System.out.println("sendMessageUser>>>>>>>>>>>>>>>>>>>>>>[" + seq + "][" + splitMessage[1] + "] :" + message);
+		System.out.println("Broadcast [" + seq + "][" + splitMessage[1] + "] :" + message);
+		Socket socket;
 		for (User user : clients.values()) {
-			
+			try {
+				socket = user.getSocket();
+				writer = new PrintWriter(socket.getOutputStream());
+				writer.println(message);
+				writer.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

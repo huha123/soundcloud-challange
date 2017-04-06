@@ -24,13 +24,12 @@ public class Follow extends Event {
 	public void sendMessageUser(Map<Integer, User> clients) {
 		String toUserId = splitMessage[3];
 		if (clients.containsKey(toUserId) == true) {
-			System.out.println("sendMessageUser>>>>>>>>>>>>>>>>>>>>>>[" + seq + "][" + splitMessage[1] + "] :" + message);
+			System.out.println("Follow [" + seq + "][" + splitMessage[1] + "] :" + message);
 			Socket socket = clients.get(toUserId).getSocket();
 			try {
 				writer = new PrintWriter(socket.getOutputStream());
 				writer.println(message);
-				boolean isCheck = writer.checkError();
-				System.out.println("sendMessageUser :" + message + ",    isCheck:" + isCheck);
+				writer.flush();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

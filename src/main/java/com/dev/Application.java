@@ -50,7 +50,6 @@ public class Application {
 		Server eventServer = new Server(eventServerSocket, new EventProcess(eventQueue), Executors.newCachedThreadPool());
 		ProcessServer processServer = new ProcessServer(clients, eventQueue);
 		
-		
 		List<Runnable> servers = new LinkedList<>();
 		servers.add(clientServer);
 		servers.add(eventServer);

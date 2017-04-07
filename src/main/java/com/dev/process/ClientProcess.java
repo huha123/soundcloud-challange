@@ -27,6 +27,7 @@ public class ClientProcess implements Process {
 			User emptyUser = clients.get(userId);
 			
 			if (emptyUser != null) {
+				System.out.println("================================================ @#@#@#@#");
 				emptyUser.notifyUser(message);
 				
 			} else {

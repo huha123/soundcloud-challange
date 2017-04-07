@@ -16,9 +16,13 @@ public class EventSendServer extends ServerAbs {
 	}
 	
 	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
+	public void run() { 
+		while (true) {
+			if (eventQueueOrdering.size() > 0) {
+				final Event event = eventQueueOrdering.poll();
+				event.sendMessage(clients);
+				System.out.println("eventQueueOrdering.size()>>>" + eventQueueOrdering.size());
+			}
+		}
 	}
-
 }

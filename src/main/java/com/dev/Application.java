@@ -13,6 +13,7 @@ import java.util.concurrent.PriorityBlockingQueue;
 import com.dev.event.Event;
 import com.dev.process.ClientProcess;
 import com.dev.process.EventProcess;
+import com.dev.server.EventSendServer;
 import com.dev.server.EventSortServer;
 import com.dev.server.Server;
 import com.dev.server.ServerAbs;
@@ -46,12 +47,14 @@ public class Application {
 		
 		final Server clientServer = new Server(clientServerSocket, Executors.newCachedThreadPool(), new ClientProcess(clients));
 		final Server eventServer = new Server(eventServerSocket, Executors.newCachedThreadPool(), new EventProcess(eventQueue));
-		final EventSortServer processServer = new EventSortServer(eventQueue, eventQueueOrdering);
+		final EventSortServer eventSortServer = new EventSortServer(eventQueue, eventQueueOrdering);
+		final EventSendServer eventSendServer = new EventSendServer(clients, eventQueueOrdering);
 		
 		List<ServerAbs> servers = new LinkedList<>();
 		servers.add(clientServer);
 		servers.add(eventServer);
-		servers.add(processServer);
+		servers.add(eventSortServer);
+		servers.add(eventSendServer);
 		
 		new Application(Executors.newCachedThreadPool(), servers).start();
 	}

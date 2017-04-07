@@ -20,7 +20,7 @@ public class EventSortServer extends ServerAbs {
 		while (true) {
 			final Event event = eventQueue.peek();
 			if (event != null && event.getSeq() <= atomicInteger.get()) {
-				System.out.println("ProcessServer[" + event.getSeq() + "][" + atomicInteger.get() +"] :" + event.getClass());
+//				System.out.println("EventSortServer[" + event.getSeq() + "][" + atomicInteger.get() +"] :" + event.getClass());
 				final Event eventOrdering = eventQueue.poll();
 				if (eventQueueOrdering.add(eventOrdering)) {
 					atomicInteger.getAndIncrement();

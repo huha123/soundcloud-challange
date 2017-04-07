@@ -7,13 +7,16 @@ import java.net.Socket;
 import java.util.Queue;
 
 import com.dev.event.Event;
-import com.dev.event.EventFactory;
-import com.dev.event.EventFactoryImpl;
+import com.dev.event.EventType;
+import com.dev.event.factory.BroadcastFactory;
+import com.dev.event.factory.FollowFactory;
+import com.dev.event.factory.PrivateMessageFactory;
+import com.dev.event.factory.StatusUpdateFactory;
+import com.dev.event.factory.UnfollowFactory;
 
 public class EventProcess implements Process {
 	private final Queue<Event> eventQueue;
-	private final EventFactory eventFactory = new EventFactoryImpl();
-	
+
 	public EventProcess(Queue<Event> eventQueue) {
 		this.eventQueue = eventQueue;
 	}
@@ -23,11 +26,32 @@ public class EventProcess implements Process {
 		final BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "utf-8"));
 		String message;
 		while ((message = reader.readLine()) != null) {
-//			System.out.println("event message:" + message);
-			String[] splitMessage = message.split("\\|");
-			String type = splitMessage[1];
-			final Event event = eventFactory.create(type, splitMessage, message);
-			eventQueue.add(event);
+			final String[] splitMessage = message.split("\\|");
+			final String type = splitMessage[1];
+			final Event event;
+			
+			switch (EventType.valueOf(type)) {
+				case F:
+					event = new FollowFactory().create(type, splitMessage, message);
+					eventQueue.add(event);
+					break;
+				case U:
+					event = new UnfollowFactory().create(type, splitMessage, message);
+					eventQueue.add(event);
+					break;
+				case B:
+					event = new BroadcastFactory().create(type, splitMessage, message);
+					eventQueue.add(event);
+					break;
+				case P:
+					event = new PrivateMessageFactory().create(type, splitMessage, message);
+					eventQueue.add(event);
+					break;
+				case S:
+					event = new StatusUpdateFactory().create(type, splitMessage, message);
+					eventQueue.add(event);
+					break;
+			}
 		}
 	}
 

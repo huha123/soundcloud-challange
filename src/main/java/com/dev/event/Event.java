@@ -15,7 +15,7 @@ public abstract class Event implements Comparable<Event> {
 		return seq;
 	}
 	
-	public abstract void notifyUser(Map<Integer, User> clients);
+	public abstract void sendMessage(Map<Integer, User> clients);
 	
 	@Override
 	public int compareTo(Event o) {

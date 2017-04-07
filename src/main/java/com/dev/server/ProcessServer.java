@@ -21,7 +21,6 @@ public class ProcessServer extends ServerAbs {
 			Event event = eventQueue.poll();
 			if (event != null) {
 				System.out.println("ProcessServer[" + event.getSeq() + "] :" + event.toString());
-				event.notifyUser(clients);
 			}
 		}
 	}

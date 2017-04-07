@@ -12,10 +12,10 @@ public class Server extends ServerAbs {
 	private Process process;
 	private ExecutorService executorService;
 	
-	public Server(ServerSocket serverSocket, Process process, ExecutorService executorService) {
+	public Server(ServerSocket serverSocket, ExecutorService executorService, Process process) {
 		this.serverSocket = serverSocket;
-		this.process = process;
 		this.executorService = executorService;
+		this.process = process;
 	}
 	
 	@Override
@@ -36,7 +36,7 @@ public class Server extends ServerAbs {
 				});
 			} catch (IOException e) {
 //				e.printStackTrace();
-//				System.out.println("exception " + executorService);
+				System.out.println("exception " + executorService);
 			}
 		}
 	}

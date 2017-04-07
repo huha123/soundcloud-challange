@@ -6,11 +6,13 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import com.dev.user.User;
 
 public class ClientProcess implements Process {
 	private Map<Integer, User> clients;
+	private AtomicInteger atomicInteger = new AtomicInteger(0);
 	
 	public ClientProcess(Map<Integer, User> clients) {
 		this.clients = clients;
@@ -22,18 +24,12 @@ public class ClientProcess implements Process {
 		PrintWriter writer = new PrintWriter(socket.getOutputStream());
 		String message;
 		while ((message = reader.readLine()) != null) {
-			System.out.println("client message:" + message);
 			int userId = Integer.parseInt(message);
-			User emptyUser = clients.get(userId);
 			
-			if (emptyUser != null) {
-				System.out.println("================================================ @#@#@#@#");
-				emptyUser.notifyUser(message);
-				
-			} else {
+			if(clients.containsKey(userId) == false) {
 				clients.put(userId, new User(userId, writer));
+				System.out.println("client message["+atomicInteger.incrementAndGet()+"]:" + message);
 			}
-			
 		}
 	}
 }

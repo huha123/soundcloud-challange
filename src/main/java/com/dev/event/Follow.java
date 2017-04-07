@@ -6,23 +6,22 @@ import com.dev.user.User;
 
 public class Follow extends Event {
 	private final int seq;
-	private final String[] splitMessage;
+	private final String toUserId;
 	private final String message;
 	
-	public Follow(int seq, String[] splitMessage, String message) {
+	public Follow(int seq, String toUserId, String message) {
 		super(seq);
 		this.seq = seq;
-		this.splitMessage = splitMessage;
+		this.toUserId = toUserId;
 		this.message = message;
 	}
 
 	@Override
-	public void notifyUser(Map<Integer, User> clients) {
-		String toUserId = splitMessage[3];
+	public void sendMessage(Map<Integer, User> clients) {
 		User user = clients.get(toUserId);
 		if (user != null) {
-			user.notifyUser(toUserId);
+			System.out.println("[Follow][" + seq + "]:" + message);
+			user.notifyUser(message);
 		}
 	}
-
 }

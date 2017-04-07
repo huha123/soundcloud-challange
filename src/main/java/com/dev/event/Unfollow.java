@@ -6,19 +6,20 @@ import com.dev.user.User;
 
 public class Unfollow extends Event {
 	private final int seq;
-	private final String[] splitMessage;
+	private final String fromUserId;
+	private final String toUserId;
 	private final String message;
 	
-	public Unfollow(int seq, String[] splitMessage, String message) {
+	public Unfollow(int seq, String fromUserId, String toUserId, String message) {
 		super(seq);
 		this.seq = seq;
-		this.splitMessage = splitMessage;
+		this.fromUserId = fromUserId;
+		this.toUserId = toUserId;
 		this.message = message;
 	}
 
 	@Override
-	public void notifyUser(Map<Integer, User> clients) {
-		System.out.println("Unfollow [" + seq + "][" + splitMessage[1] + "] :" + message);			
+	public void sendMessage(Map<Integer, User> clients) {
+		System.out.println("[Unfollow][" + seq + "]:" + message);
 	}
-
 }

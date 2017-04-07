@@ -13,7 +13,7 @@ public class User implements Comparable<User> {
 		this.writer = writer;
 	}
 	
-	public Integer getUserId() {
+	public int getUserId() {
 		return userId;
 	}
 	
@@ -25,13 +25,6 @@ public class User implements Comparable<User> {
 		} else {
 			return false;
 		}
-	}
-	
-	public boolean notifyAllUser(String message) {
-		for (User follower : followers) {
-			follower.notifyUser(message);
-		}
-		return false;
 	}
 	
 	@Override

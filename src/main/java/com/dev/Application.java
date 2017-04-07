@@ -36,17 +36,17 @@ public class Application {
 	public static void main(String[] args) throws IOException {
 		final Map<Integer, User> clients = new ConcurrentHashMap<>();
 		final PriorityBlockingQueue<Event> eventQueue = new PriorityBlockingQueue<>();
+		final PriorityBlockingQueue<Event> eventQueueOrdering = new PriorityBlockingQueue<>();
 
 		final ServerSocket clientServerSocket = new ServerSocket(9099);
-		clientServerSocket.setSoTimeout(1000);
+		clientServerSocket.setSoTimeout(500);
 		
 		final ServerSocket eventServerSocket = new ServerSocket(9090);
-		eventServerSocket.setSoTimeout(1000);
-		
+		eventServerSocket.setSoTimeout(500);
 		
 		final Server clientServer = new Server(clientServerSocket, Executors.newCachedThreadPool(), new ClientProcess(clients));
 		final Server eventServer = new Server(eventServerSocket, Executors.newCachedThreadPool(), new EventProcess(eventQueue));
-		final ProcessServer processServer = new ProcessServer(clients, eventQueue);
+		final ProcessServer processServer = new ProcessServer(clients, eventQueue, eventQueueOrdering);
 		
 		List<ServerAbs> servers = new LinkedList<>();
 		servers.add(clientServer);

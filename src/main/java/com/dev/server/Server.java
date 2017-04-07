@@ -30,13 +30,14 @@ public class Server extends ServerAbs {
 						try {
 							process.process(socket);
 						} catch (IOException e) {
+							System.out.println("exception " + executorService);
 							e.printStackTrace();
 						}
 					}
 				});
 			} catch (IOException e) {
 //				e.printStackTrace();
-				System.out.println("exception " + executorService);
+//				System.out.println("exception " + executorService);
 			}
 		}
 	}

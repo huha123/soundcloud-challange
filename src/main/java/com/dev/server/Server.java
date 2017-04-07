@@ -7,7 +7,7 @@ import java.util.concurrent.ExecutorService;
 
 import com.dev.process.Process;
 
-public class Server implements Runnable {
+public class Server extends ServerAbs {
 	private ServerSocket serverSocket;
 	private Process process;
 	private ExecutorService executorService;
@@ -35,9 +35,9 @@ public class Server implements Runnable {
 					}
 				});
 			} catch (IOException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
+//				System.out.println("exception " + executorService);
 			}
 		}
 	}
-
 }

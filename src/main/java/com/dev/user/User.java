@@ -1,24 +1,39 @@
 package com.dev.user;
 
-import java.net.Socket;
+import java.io.PrintWriter;
+import java.util.Set;
 
 public class User implements Comparable<User> {
-	private Socket socket;
 	private Integer userId;
+	private PrintWriter writer;
+	private Set<User> followers;
 	
-	public User(Integer userId, Socket socket) {
+	public User(Integer userId, PrintWriter writer) {
 		this.userId = userId;
-		this.socket = socket;
+		this.writer = writer;
 	}
 	
 	public Integer getUserId() {
 		return userId;
 	}
 	
-	public Socket getSocket() {
-		return socket;
+	public boolean notifyUser(String message) {
+		if (writer != null) {
+			writer.println(message);
+			return writer.checkError();
+			
+		} else {
+			return false;
+		}
 	}
-
+	
+	public boolean notifyAllUser(String message) {
+		for (User follower : followers) {
+			follower.notifyUser(message);
+		}
+		return false;
+	}
+	
 	@Override
 	public int compareTo(User o) {
 		return userId.compareTo(o.userId);

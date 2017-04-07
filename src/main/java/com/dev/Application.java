@@ -15,15 +15,15 @@ import com.dev.process.ClientProcess;
 import com.dev.process.EventProcess;
 import com.dev.server.ProcessServer;
 import com.dev.server.Server;
+import com.dev.server.ServerAbs;
 import com.dev.user.User;
 
 public class Application {
-//	private static final Map<Integer, Socket> clients = new ConcurrentHashMap<>();
 	private static final Map<Integer, User> clients = new ConcurrentHashMap<>();
 	private final ExecutorService executorService;
-	private final List<Runnable> servers;
+	private final List<ServerAbs> servers;
 	
-	public Application(ExecutorService executorService, List<Runnable> servers) {
+	public Application(ExecutorService executorService, List<ServerAbs> servers) {
 		this.executorService = executorService;
 		this.servers = servers;
 	}
@@ -32,27 +32,25 @@ public class Application {
 		for (Runnable server : servers) {
 			executorService.execute(server);
 		}
-		while (true) {
-			executorService.shutdownNow();
-		}
 	}
 	
 	public static void main(String[] args) throws IOException {
-		ServerSocket clientServerSocket = new ServerSocket(9099);
+		final ServerSocket clientServerSocket = new ServerSocket(9099);
+		clientServerSocket.setSoTimeout(1000);
 		System.out.println("client server open port number 9099...");
 		
-		ServerSocket eventServerSocket = new ServerSocket(9090);
+		final ServerSocket eventServerSocket = new ServerSocket(9090);
+		eventServerSocket.setSoTimeout(1000);
 		System.out.println("event server open port number 9090...");
 		
 		PriorityBlockingQueue<Event> eventQueue = new PriorityBlockingQueue<>();
 		
-		Server clientServer = new Server(clientServerSocket, new ClientProcess(clients), Executors.newCachedThreadPool());
-		Server eventServer = new Server(eventServerSocket, new EventProcess(eventQueue), Executors.newCachedThreadPool());
-		ProcessServer processServer = new ProcessServer(clients, eventQueue);
+		final Server clientServer = new Server(clientServerSocket, new ClientProcess(clients), Executors.newCachedThreadPool());
+		final Server eventServer = new Server(eventServerSocket, new EventProcess(eventQueue), Executors.newCachedThreadPool());
+		final ProcessServer processServer = new ProcessServer(clients, eventQueue);
 		
-		List<Runnable> servers = new LinkedList<>();
+		List<ServerAbs> servers = new LinkedList<>();
 		servers.add(clientServer);
-		servers.add(eventServer);
 		servers.add(eventServer);
 		servers.add(processServer);
 		new Application(Executors.newCachedThreadPool(), servers).start();

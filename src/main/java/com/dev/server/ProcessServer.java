@@ -6,7 +6,7 @@ import java.util.Queue;
 import com.dev.event.Event;
 import com.dev.user.User;
 
-public class ProcessServer implements Runnable {
+public class ProcessServer extends ServerAbs {
 	private final Map<Integer, User> clients;
 	private final Queue<Event> eventQueue;
 	
@@ -21,7 +21,7 @@ public class ProcessServer implements Runnable {
 			Event event = eventQueue.poll();
 			if (event != null) {
 				System.out.println("ProcessServer[" + event.getSeq() + "] :" + event.toString());
-				event.sendMessageUser(clients);
+				event.notifyUser(clients);
 			}
 		}
 	}

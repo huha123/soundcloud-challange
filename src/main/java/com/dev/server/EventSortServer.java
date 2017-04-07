@@ -7,13 +7,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 import com.dev.event.Event;
 import com.dev.user.User;
 
-public class ProcessServer extends ServerAbs {
+public class EventSortServer extends ServerAbs {
 	private final Map<Integer, User> clients;
 	private final Queue<Event> eventQueue;
 	private final Queue<Event> eventQueueOrdering;
 	private final AtomicInteger atomicInteger = new AtomicInteger(1);
 	
-	public ProcessServer(Map<Integer, User> clients, Queue<Event> eventQueue, Queue<Event> eventQueueOrdering) {
+	public EventSortServer(Map<Integer, User> clients, Queue<Event> eventQueue, Queue<Event> eventQueueOrdering) {
 		this.clients = clients;
 		this.eventQueue = eventQueue;
 		this.eventQueueOrdering = eventQueueOrdering;

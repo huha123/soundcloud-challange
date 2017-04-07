@@ -46,7 +46,7 @@ public class Application {
 		
 		final Server clientServer = new Server(clientServerSocket, Executors.newCachedThreadPool(), new ClientProcess(clients));
 		final Server eventServer = new Server(eventServerSocket, Executors.newCachedThreadPool(), new EventProcess(eventQueue));
-		final EventSortServer processServer = new EventSortServer(clients, eventQueue, eventQueueOrdering);
+		final EventSortServer processServer = new EventSortServer(eventQueue, eventQueueOrdering);
 		
 		List<ServerAbs> servers = new LinkedList<>();
 		servers.add(clientServer);

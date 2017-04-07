@@ -1,20 +1,16 @@
 package com.dev.server;
 
-import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.dev.event.Event;
-import com.dev.user.User;
 
 public class EventSortServer extends ServerAbs {
-	private final Map<Integer, User> clients;
 	private final Queue<Event> eventQueue;
 	private final Queue<Event> eventQueueOrdering;
 	private final AtomicInteger atomicInteger = new AtomicInteger(1);
 	
-	public EventSortServer(Map<Integer, User> clients, Queue<Event> eventQueue, Queue<Event> eventQueueOrdering) {
-		this.clients = clients;
+	public EventSortServer(Queue<Event> eventQueue, Queue<Event> eventQueueOrdering) {
 		this.eventQueue = eventQueue;
 		this.eventQueueOrdering = eventQueueOrdering;
 	}

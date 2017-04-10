@@ -1,16 +1,24 @@
 package com.dev.user;
 
 import java.io.PrintWriter;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 public class User implements Comparable<User> {
 	private final Integer userId;
 	private PrintWriter writer;
 	private final Set<User> followers;
+	private List<String> notConnectUser = new LinkedList<>();
 	
 	public User(Integer userId, PrintWriter writer, Set<User> followers) {
 		this.userId = userId;
 		this.writer = writer;
+		this.followers = followers;
+	}
+	
+	public User(Integer userId, Set<User> followers, List<String> notConnectUser) {
+		this.userId = userId;
 		this.followers = followers;
 	}
 	

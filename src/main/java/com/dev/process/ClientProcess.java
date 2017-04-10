@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -26,11 +27,17 @@ public class ClientProcess implements Process {
 		String message;
 		while ((message = reader.readLine()) != null) {
 			final int userId = Integer.parseInt(message);
+			
+//			System.out.println("client message["+atomicInteger.incrementAndGet()+"]  Add user :" + userId);
 			if(clients.containsKey(userId) == false) {
 				final User user = new User(userId, writer, new ConcurrentSkipListSet<User>());
 				clients.put(userId, user);
-//				System.out.println("client message["+atomicInteger.incrementAndGet()+"]:" + message);
-				System.out.println("client message["+atomicInteger.incrementAndGet()+"]  Add user :" + userId);
+				System.out.println("client message["+atomicInteger.incrementAndGet()+"]  Add New user :" + userId);
+				
+			} else {
+				final User notConnectUser = new User(userId, new ConcurrentSkipListSet<User>(), new LinkedList<String>());
+				clients.put(userId, notConnectUser);
+				System.out.println("client message["+atomicInteger.incrementAndGet()+"]  Add Not Connect user :" + userId);
 			}
 		}
 	}

@@ -28,6 +28,8 @@ public class Follow extends Event {
 			if (clients.containsKey(fromUserId)) {
 				User fromUser = clients.get(fromUserId);
 				user.addFollower(fromUser);
+			} else {
+				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 			}
 		}
 	}

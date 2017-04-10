@@ -18,6 +18,8 @@ public class StatusUpdate extends Event{
 
 	@Override
 	public void sendMessage(Map<Integer, User> clients) {
+		User fromUser = clients.get(fromUserId);
+		fromUser.notifyAllUser(message);
 		System.out.println("[StatusUpdate][" + seq + "]:" + message);		
 	}
 

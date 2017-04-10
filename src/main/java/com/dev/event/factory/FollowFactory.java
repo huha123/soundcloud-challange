@@ -9,7 +9,8 @@ public class FollowFactory implements EventFactory {
 	public Event create(String type, String[] splitMessage, String message) {
 		final int seq = Integer.parseInt(splitMessage[0]);
 		final String toUserId = splitMessage[3];
-		return new Follow(seq, toUserId, message);
+		final String fromUserId = splitMessage[2];
+		return new Follow(seq, toUserId, fromUserId, message);
 	}
 
 }

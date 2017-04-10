@@ -21,5 +21,8 @@ public class Unfollow extends Event {
 	@Override
 	public void sendMessage(Map<Integer, User> clients) {
 		System.out.println("[Unfollow][" + seq + "]:" + message);
+		User user = clients.get(toUserId);
+		User fromUser = clients.get(fromUserId);
+		user.removeFollower(fromUser);
 	}
 }

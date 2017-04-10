@@ -1,6 +1,7 @@
 package com.dev.user;
 
 import java.io.PrintWriter;
+import java.util.Map;
 import java.util.Set;
 
 public class User implements Comparable<User> {
@@ -27,9 +28,22 @@ public class User implements Comparable<User> {
 		}
 	}
 	
+	public void notifyAllUser(String message) {
+		for (User user : followers) {
+			user.notifyUser(message);
+		}
+	}
+	
+	public void addFollower(User fromUser) {
+		followers.add(fromUser);
+	}
+	
+	public void removeFollower(User fromUser) {
+		followers.remove(fromUser);
+	}
+	
 	@Override
 	public int compareTo(User o) {
 		return userId.compareTo(o.userId);
 	}
-
 }

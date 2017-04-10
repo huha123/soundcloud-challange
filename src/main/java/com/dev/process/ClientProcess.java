@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Map;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.dev.user.User;
@@ -20,15 +21,16 @@ public class ClientProcess implements Process {
 	
 	@Override
 	public void process(Socket socket) throws IOException {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "utf-8"));
-		PrintWriter writer = new PrintWriter(socket.getOutputStream());
+		final BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "utf-8"));
+		final PrintWriter writer = new PrintWriter(socket.getOutputStream());
 		String message;
 		while ((message = reader.readLine()) != null) {
-			int userId = Integer.parseInt(message);
-			
+			final int userId = Integer.parseInt(message);
 			if(clients.containsKey(userId) == false) {
-				clients.put(userId, new User(userId, writer));
-				System.out.println("client message["+atomicInteger.incrementAndGet()+"]:" + message);
+				final User user = new User(userId, writer, new ConcurrentSkipListSet<User>());
+				clients.put(userId, user);
+//				System.out.println("client message["+atomicInteger.incrementAndGet()+"]:" + message);
+				System.out.println("client message["+atomicInteger.incrementAndGet()+"]  Add user :" + userId);
 			}
 		}
 	}

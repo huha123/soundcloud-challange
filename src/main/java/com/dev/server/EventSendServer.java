@@ -20,6 +20,7 @@ public class EventSendServer extends ServerAbs {
 		while (true) {
 			if (eventQueueOrdering.size() > 0) {
 				final Event event = eventQueueOrdering.poll();
+//				System.out.println("[EventSendServer] :" + event.toString());
 				event.sendMessage(clients);
 			}
 		}

@@ -40,10 +40,10 @@ public class Application {
 		final PriorityBlockingQueue<Event> eventQueueOrdering = new PriorityBlockingQueue<>();
 
 		final ServerSocket clientServerSocket = new ServerSocket(9099);
-		clientServerSocket.setSoTimeout(500);
+		clientServerSocket.setSoTimeout(1000);
 		
 		final ServerSocket eventServerSocket = new ServerSocket(9090);
-		eventServerSocket.setSoTimeout(500);
+		eventServerSocket.setSoTimeout(1000);
 		
 		final Server clientServer = new Server(clientServerSocket, Executors.newCachedThreadPool(), new ClientProcess(clients));
 		final Server eventServer = new Server(eventServerSocket, Executors.newCachedThreadPool(), new EventProcess(eventQueue));

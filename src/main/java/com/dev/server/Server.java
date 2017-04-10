@@ -8,9 +8,9 @@ import java.util.concurrent.ExecutorService;
 import com.dev.process.Process;
 
 public class Server extends ServerAbs {
-	private ServerSocket serverSocket;
-	private Process process;
-	private ExecutorService executorService;
+	private final ServerSocket serverSocket;
+	private final Process process;
+	private final ExecutorService executorService;
 	
 	public Server(ServerSocket serverSocket, ExecutorService executorService, Process process) {
 		this.serverSocket = serverSocket;
@@ -30,14 +30,12 @@ public class Server extends ServerAbs {
 						try {
 							process.process(socket);
 						} catch (IOException e) {
-							System.out.println("exception " + executorService);
 							e.printStackTrace();
 						}
 					}
 				});
 			} catch (IOException e) {
 //				e.printStackTrace();
-//				System.out.println("exception " + executorService);
 			}
 		}
 	}

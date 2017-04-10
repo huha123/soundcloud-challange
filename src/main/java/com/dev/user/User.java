@@ -1,17 +1,17 @@
 package com.dev.user;
 
 import java.io.PrintWriter;
-import java.util.Map;
 import java.util.Set;
 
 public class User implements Comparable<User> {
-	private Integer userId;
+	private final Integer userId;
 	private PrintWriter writer;
-	private Set<User> followers;
+	private final Set<User> followers;
 	
-	public User(Integer userId, PrintWriter writer) {
+	public User(Integer userId, PrintWriter writer, Set<User> followers) {
 		this.userId = userId;
 		this.writer = writer;
+		this.followers = followers;
 	}
 	
 	public int getUserId() {

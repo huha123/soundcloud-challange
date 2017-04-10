@@ -6,11 +6,11 @@ import com.dev.user.User;
 
 public class Follow extends Event {
 	private final int seq;
-	private final String toUserId;
-	private final String fromUserId;
+	private final int toUserId;
+	private final int fromUserId;
 	private final String message;
 	
-	public Follow(int seq, String toUserId, String fromUserId, String message) {
+	public Follow(int seq, int toUserId, int fromUserId, String message) {
 		super(seq);
 		this.seq = seq;
 		this.toUserId = toUserId;
@@ -20,13 +20,21 @@ public class Follow extends Event {
 
 	@Override
 	public void sendMessage(Map<Integer, User> clients) {
-		User user = clients.get(toUserId);
-		User fromUser = clients.get(fromUserId);
-		if (user != null) {
+		if (clients.containsKey(toUserId)) {
 			System.out.println("[Follow][" + seq + "]:" + message);
-			boolean isFollow = user.notifyUser(message);
-			System.out.println("isFollow>>>>>>>>>>>>>>>>>>>>>>>" + isFollow);
-			user.addFollower(fromUser);
+			User user = clients.get(toUserId);
+			user.notifyUser(message);
+			
+			if (clients.containsKey(fromUserId)) {
+				User fromUser = clients.get(fromUserId);
+				user.addFollower(fromUser);
+			}
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Follow [seq=" + seq + ", toUserId=" + toUserId + ", fromUserId=" + fromUserId + ", message=" + message
+				+ "]";
 	}
 }

@@ -16,9 +16,14 @@ public class Broadcast extends Event {
 
 	@Override
 	public void sendMessage(Map<Integer, User> clients) {
-		System.out.println("[Broadcast][" + seq + "]:" + message);
 		for (User user : clients.values()) {
-			user.notifyAllUser(message);
+			System.out.println("[Broadcast][" + seq + "]:" + message);
+			user.notifyUser(message);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Broadcast [seq=" + seq + ", message=" + message + "]";
 	}
 }

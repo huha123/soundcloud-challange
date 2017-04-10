@@ -6,10 +6,10 @@ import com.dev.user.User;
 
 public class StatusUpdate extends Event{
 	private final int seq;
-	private final String fromUserId;
+	private final int fromUserId;
 	private final String message;
 	
-	public StatusUpdate(int seq, String fromUserId, String message) {
+	public StatusUpdate(int seq, int fromUserId, String message) {
 		super(seq);
 		this.seq = seq;
 		this.fromUserId = fromUserId;
@@ -18,9 +18,16 @@ public class StatusUpdate extends Event{
 
 	@Override
 	public void sendMessage(Map<Integer, User> clients) {
-		User fromUser = clients.get(fromUserId);
-		fromUser.notifyAllUser(message);
-		System.out.println("[StatusUpdate][" + seq + "]:" + message);		
+		if (clients.containsKey(fromUserId)) {
+			System.out.println("[StatusUpdate][" + seq + "]:" + message);		
+			User fromUser = clients.get(fromUserId);
+			fromUser.notifyAllUser(message);
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "StatusUpdate [seq=" + seq + ", fromUserId=" + fromUserId + ", message=" + message + "]";
 	}
 
 }

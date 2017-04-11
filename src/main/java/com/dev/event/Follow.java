@@ -1,6 +1,7 @@
 package com.dev.event;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 import com.dev.user.User;
 
@@ -20,16 +21,22 @@ public class Follow extends Event {
 
 	@Override
 	public void sendMessage(Map<Integer, User> clients) {
+		System.out.println("[Follow][" + seq + "]:" + message);
+		
 		if (clients.containsKey(toUserId)) {
-			System.out.println("[Follow][" + seq + "]:" + message);
 			User user = clients.get(toUserId);
 			user.notifyUser(message);
-			
 			if (clients.containsKey(fromUserId)) {
 				User fromUser = clients.get(fromUserId);
 				user.addFollower(fromUser);
-			} else {
-				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			}
+			
+		} else {
+			User notConnectUser = new User(toUserId, null, new ConcurrentSkipListSet<>(), false);
+			clients.put(toUserId, notConnectUser);
+			if (clients.containsKey(toUserId) && clients.containsKey(fromUserId)) {
+				User fromUser = clients.get(fromUserId);
+				notConnectUser.addFollower(fromUser);
 			}
 		}
 	}

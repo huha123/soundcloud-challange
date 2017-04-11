@@ -18,8 +18,8 @@ public class StatusUpdate extends Event{
 
 	@Override
 	public void sendMessage(Map<Integer, User> clients) {
+		System.out.println("[StatusUpdate][" + seq + "]:" + message);		
 		if (clients.containsKey(fromUserId)) {
-			System.out.println("[StatusUpdate][" + seq + "]:" + message);		
 			User fromUser = clients.get(fromUserId);
 			fromUser.notifyAllUser(message);
 		}

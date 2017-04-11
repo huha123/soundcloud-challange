@@ -1,25 +1,20 @@
 package com.dev.user;
 
 import java.io.PrintWriter;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class User implements Comparable<User> {
 	private final Integer userId;
 	private PrintWriter writer;
 	private final Set<User> followers;
-	private List<String> notConnectUser = new LinkedList<>();
+	private final AtomicBoolean isConnect = new AtomicBoolean(false);
 	
-	public User(Integer userId, PrintWriter writer, Set<User> followers) {
+	public User(Integer userId, PrintWriter writer, Set<User> followers, boolean isConnect) {
 		this.userId = userId;
 		this.writer = writer;
 		this.followers = followers;
-	}
-	
-	public User(Integer userId, Set<User> followers, List<String> notConnectUser) {
-		this.userId = userId;
-		this.followers = followers;
+		this.isConnect.set(isConnect);
 	}
 	
 	public int getUserId() {
@@ -27,7 +22,7 @@ public class User implements Comparable<User> {
 	}
 	
 	public boolean notifyUser(String message) {
-		if (writer != null) {
+		if (writer != null && isConnect.get()) {
 			writer.println(message);
 			return writer.checkError();
 			

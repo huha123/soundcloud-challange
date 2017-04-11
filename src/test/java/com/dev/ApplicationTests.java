@@ -1,14 +1,12 @@
 package com.dev;
 
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.PriorityBlockingQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.dev.event.EventType;
@@ -21,19 +19,19 @@ public class ApplicationTests {
 		AtomicInteger atomicInteger = new AtomicInteger(1);
 		PriorityBlockingQueue<User> queue = new PriorityBlockingQueue<>();
 		
-		queue.put(new User(3, null, new ConcurrentSkipListSet<>()));
-		queue.put(new User(7, null, new ConcurrentSkipListSet<>()));
-		queue.put(new User(4, null, new ConcurrentSkipListSet<>()));
-		queue.put(new User(2, null, new ConcurrentSkipListSet<>()));
-		queue.put(new User(5, null, new ConcurrentSkipListSet<>()));
-		queue.put(new User(11, null, new ConcurrentSkipListSet<>()));
-		queue.put(new User(12, null, new ConcurrentSkipListSet<>()));
-		queue.put(new User(6, null, new ConcurrentSkipListSet<>()));
-		queue.put(new User(9, null, new ConcurrentSkipListSet<>()));
-		queue.put(new User(8, null, new ConcurrentSkipListSet<>()));
-		queue.put(new User(13, null, new ConcurrentSkipListSet<>()));
-		queue.put(new User(1, null, new ConcurrentSkipListSet<>()));
-		queue.put(new User(10, null, new ConcurrentSkipListSet<>()));
+		queue.put(new User(3, null, null, true));
+		queue.put(new User(7, null, null, true));
+		queue.put(new User(4, null, null, true));
+		queue.put(new User(2, null, null, true));
+		queue.put(new User(5, null, null, true));
+		queue.put(new User(11, null, null, true));
+		queue.put(new User(12, null, null, true));
+		queue.put(new User(6, null, null , true));
+		queue.put(new User(9, null, null, true));
+		queue.put(new User(8, null, null, true));
+		queue.put(new User(13, null, null, true));
+		queue.put(new User(1, null, null, true));
+		queue.put(new User(10, null, null, true));
 
 		while(queue.size() > 0) {
 			if (queue.peek().getUserId() <= atomicInteger.get()) {
@@ -60,6 +58,14 @@ public class ApplicationTests {
 		for (Integer integer : map) {
 			System.out.println("integer:" + integer + ",  map Size:" + map.size());
 		}
+	}
+	
+	@Test
+	public void test4() {
+		final AtomicBoolean atomicBoolean = new AtomicBoolean(false);
+		System.out.println("init atomicBoolean :" + atomicBoolean.get());
 		
+		atomicBoolean.set(true);
+		System.out.println("after atomicBoolean :" + atomicBoolean);
 	}
 }

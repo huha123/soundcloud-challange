@@ -18,8 +18,8 @@ public class PrivateMessage extends Event {
 
 	@Override
 	public void sendMessage(Map<Integer, User> clients) {
+		System.out.println("[PrivateMessage][" + seq + "]:" + message);
 		if (clients.containsKey(toUserId)) {
-			System.out.println("[PrivateMessage][" + seq + "]:" + message);
 			final User user = clients.get(toUserId);
 			user.notifyUser(message);
 		}

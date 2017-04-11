@@ -20,8 +20,8 @@ public class Unfollow extends Event {
 
 	@Override
 	public void sendMessage(Map<Integer, User> clients) {
+		System.out.println("[Unfollow][" + seq + "]:" + message);
 		if (clients.containsKey(toUserId)) {
-			System.out.println("[Unfollow][" + seq + "]:" + message);
 			final User user = clients.get(toUserId);
 			if (clients.containsKey(fromUserId)) {
 				final User fromUser = clients.get(fromUserId);
@@ -35,4 +35,5 @@ public class Unfollow extends Event {
 		return "Unfollow [seq=" + seq + ", fromUserId=" + fromUserId + ", toUserId=" + toUserId + ", message=" + message
 				+ "]";
 	}
+	
 }

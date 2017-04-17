@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.dev.user.User;
 
-public class StatusUpdate extends Event{
+public class StatusUpdate extends Event {
 	private final int seq;
 	private final int fromUserId;
 	private final String message;
